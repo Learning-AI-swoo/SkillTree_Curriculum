@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import ReactFlow, { 
   Background, 
@@ -105,6 +105,14 @@ const App = () => {
   const [filterMode, setFilterMode] = useState<'all' | 'next' | 'completed'>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Use a ref to track completed courses for the reset handler
+  // This avoids stale closures if the Controls component doesn't update the click handler
+  const completedCoursesRef = useRef(completedCourses);
+
+  useEffect(() => {
+    completedCoursesRef.current = completedCourses;
+  }, [completedCourses]);
+
   const handleToggleCourse = useCallback((courseId: string) => {
     setCompletedCourses(prev => {
       const newSet = new Set(prev);
@@ -118,15 +126,17 @@ const App = () => {
   }, []);
 
   const handleResetProgress = useCallback(() => {
-    // Provide feedback if there's nothing to reset, otherwise the button feels broken
-    if (completedCourses.size === 0) {
+    // Check the Ref instead of the state dependency
+    if (completedCoursesRef.current.size === 0) {
       alert("No progress to reset.");
       return;
     }
-    if (window.confirm("Reset all progress? This will uncheck all completed courses.")) {
+    
+    // We can confidently ask for confirmation now
+    if (window.confirm(`Reset progress for ${completedCoursesRef.current.size} courses?`)) {
       setCompletedCourses(new Set());
     }
-  }, [completedCourses]);
+  }, []); // Empty dependency array ensures stable function reference
 
   const handleLoadData = (newCourses: Course[]) => {
     setCourses(newCourses);
