@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillTree Curriculum Mapper</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/reactflow@11.10.1/dist/style.min.css" rel="stylesheet" />
+    <style>
+      /* Custom scrollbar for webkit */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1f2937; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #4b5563; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #6b7280; 
+      }
+      body {
+        background-color: #111827; /* gray-900 */
+        color: #f3f4f6; /* gray-100 */
+      }
+
+      /* React Flow Controls Dark Mode Override */
+      .react-flow__controls {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+        border: 1px solid #374151 !important; /* gray-700 */
+        background-color: #1f2937 !important; /* gray-800 */
+        border-radius: 0.5rem !important;
+        overflow: hidden;
+      }
+
+      .react-flow__controls-button {
+        background-color: #1f2937 !important; /* gray-800 */
+        border-bottom: 1px solid #374151 !important; /* gray-700 */
+        fill: #d1d5db !important; /* gray-300 */
+        color: #d1d5db !important;
+        transition: all 0.2s;
+      }
+
+      .react-flow__controls-button:hover {
+        background-color: #374151 !important; /* gray-700 */
+        fill: #fff !important;
+        color: #fff !important;
+      }
+
+      .react-flow__controls-button:last-child {
+        border-bottom: none !important;
+      }
+
+      /* Ensure both fill (default icons) and stroke (custom icons) work */
+      .react-flow__controls-button svg {
+        fill: currentColor !important;
+      }
+      /* Reset specific overrides for stroked icons if needed, 
+         but currentColor usually handles it if the SVG uses it. */
+      .react-flow__controls-button svg path[stroke] {
+        fill: none !important;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.37.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "dagre": "https://esm.sh/dagre@^0.8.5",
+    "reactflow": "https://esm.sh/reactflow@^11.11.4"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

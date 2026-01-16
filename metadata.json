@@ -1,0 +1,5 @@
+{
+  "name": "SkillTree Curriculum Mapper",
+  "description": "An interactive, RPG-style curriculum pathway map that visualizes prerequisites and tracks progress.",
+  "requestFramePermissions": []
+}
