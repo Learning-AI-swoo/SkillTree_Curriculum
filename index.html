@@ -7,48 +7,48 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/reactflow@11.10.1/dist/style.min.css" rel="stylesheet" />
     <style>
-      /* Custom scrollbar for webkit */
+      /* Custom scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #1f2937; 
+        background: #f3f4f6; 
       }
       ::-webkit-scrollbar-thumb {
-        background: #4b5563; 
+        background: #9ca3af; 
         border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb:hover {
         background: #6b7280; 
       }
       body {
-        background-color: #111827; /* gray-900 */
-        color: #f3f4f6; /* gray-100 */
+        background-color: #f9fafb; /* gray-50 */
+        color: #111827; /* gray-900 */
       }
 
-      /* React Flow Controls Dark Mode Override - High Specificity */
+      /* React Flow Controls Light Mode Override */
       body .react-flow__controls {
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
-        border: 1px solid #4b5563 !important; /* gray-600 */
-        background-color: #1f2937 !important; /* gray-800 */
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+        border: 1px solid #e5e7eb !important; /* gray-200 */
+        background-color: #ffffff !important; /* white */
         border-radius: 0.5rem !important;
         overflow: hidden;
       }
 
       body .react-flow__controls-button {
-        background-color: #1f2937 !important; /* gray-800 */
-        border-bottom: 1px solid #374151 !important; /* gray-700 */
-        fill: #e5e7eb !important; /* gray-200 */
-        color: #e5e7eb !important;
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #e5e7eb !important;
+        fill: #4b5563 !important; /* gray-600 */
+        color: #4b5563 !important;
         transition: all 0.2s;
         border-radius: 0 !important;
       }
 
       body .react-flow__controls-button:hover {
-        background-color: #374151 !important; /* gray-700 */
-        fill: #ffffff !important;
-        color: #ffffff !important;
+        background-color: #f3f4f6 !important; /* gray-100 */
+        fill: #111827 !important; /* gray-900 */
+        color: #111827 !important;
       }
 
       body .react-flow__controls-button:last-child {

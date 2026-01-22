@@ -2,8 +2,8 @@ import dagre from 'dagre';
 import { Node, Edge, Position } from 'reactflow';
 import { Course, CourseStatus } from '../types';
 
-const nodeWidth = 240;
-const nodeHeight = 120; // Approximated height of our custom node
+const nodeWidth = 280;
+const nodeHeight = 140; // Updated for slightly taller nodes
 
 export const getLayoutedElements = (
   courses: Course[],
@@ -16,13 +16,13 @@ export const getLayoutedElements = (
   dagreGraph.setDefaultEdgeLabel(() => ({}));
 
   // Set layout direction (Top to Bottom)
-  dagreGraph.setGraph({ rankdir: 'TB', nodesep: 50, ranksep: 100 });
+  dagreGraph.setGraph({ rankdir: 'TB', nodesep: 60, ranksep: 100 });
 
   // 1. Determine Status for each course
   const courseStatusMap = new Map<string, CourseStatus>();
   
   const isUnlocked = (course: Course): boolean => {
-    if (completedCourses.has(course.id)) return true; // Already done implies unlocked logic for internal checks
+    if (completedCourses.has(course.id)) return true;
     if (course.prerequisites.length === 0) return true;
     return course.prerequisites.every((prereqId) => completedCourses.has(prereqId));
   };
@@ -49,11 +49,11 @@ export const getLayoutedElements = (
         dagreGraph.setEdge(prereqId, course.id);
         
         const isPathActive = completedCourses.has(prereqId);
-        const targetStatus = courseStatusMap.get(course.id);
         
-        // Dim edge if nodes are dimmed? 
-        // Simple logic: If filtering, dim edges connected to dimmed nodes
-        let opacity = isPathActive ? 1 : 0.5;
+        // Day Theme Edge Colors
+        // Active path: Emerald/Green
+        // Inactive path: Gray (darker than before for white bg)
+        let opacity = isPathActive ? 1 : 0.6;
         
         edges.push({
           id: `${prereqId}-${course.id}`,
@@ -62,7 +62,7 @@ export const getLayoutedElements = (
           type: 'smoothstep',
           animated: isPathActive,
           style: { 
-            stroke: isPathActive ? '#10b981' : '#4b5563',
+            stroke: isPathActive ? '#10b981' : '#9ca3af', // emerald-500 or gray-400
             strokeWidth: isPathActive ? 2 : 1,
             opacity: opacity
           },
@@ -84,7 +84,6 @@ export const getLayoutedElements = (
     if (filterMode === 'completed') {
       isDimmed = status !== 'completed';
     } else if (filterMode === 'next') {
-      // Show unlocked (next available) and completed (context). Dim locked.
       isDimmed = status === 'locked';
     }
 

@@ -36,25 +36,27 @@ const StarIcon = () => (
 const CourseNode = ({ data }: NodeProps<CourseNodeData>) => {
   const { course, status, onToggle, onDetails, isDimmed } = data;
 
-  const isMilestone = course.category?.toLowerCase() === 'milestone' || 
-                     course.category?.toLowerCase() === 'requirement';
+  const isMilestone = course.category?.toLowerCase().includes('milestone');
 
-  // Style configurations based on status
+  // Day Theme Styles
   const styles = {
     locked: {
-      wrapper: "bg-gray-800 border-gray-600 text-gray-500",
+      wrapper: "bg-gray-100 border-gray-300 text-gray-500 shadow-sm",
       icon: <LockIcon />,
+      iconBg: "bg-gray-200 text-gray-400",
       glow: "shadow-none",
     },
     unlocked: {
-      wrapper: "bg-gray-800 border-blue-500 text-blue-100 hover:border-blue-400",
+      wrapper: "bg-white border-blue-500 text-gray-900 shadow-lg ring-1 ring-blue-100",
       icon: <UnlockIcon />,
-      glow: "shadow-[0_0_15px_rgba(59,130,246,0.3)]",
+      iconBg: "bg-blue-100 text-blue-600 hover:bg-blue-200",
+      glow: "shadow-[0_4px_12px_rgba(59,130,246,0.15)]",
     },
     completed: {
-      wrapper: "bg-emerald-900 border-emerald-500 text-emerald-100",
+      wrapper: "bg-emerald-50 border-emerald-500 text-gray-900 shadow-md",
       icon: <CheckIcon />,
-      glow: "shadow-[0_0_15px_rgba(16,185,129,0.4)]",
+      iconBg: "bg-emerald-500 text-white hover:bg-emerald-600",
+      glow: "shadow-[0_2px_8px_rgba(16,185,129,0.2)]",
     }
   };
 
@@ -62,11 +64,11 @@ const CourseNode = ({ data }: NodeProps<CourseNodeData>) => {
   
   // Overrides for Milestone/Requirement
   const milestoneClass = isMilestone 
-    ? "border-dashed !border-purple-500 !bg-gray-900"
+    ? "border-dashed !border-purple-400 !bg-purple-50"
     : "";
   
   const milestoneGlow = (isMilestone && status === 'unlocked') 
-    ? "shadow-[0_0_15px_rgba(168,85,247,0.3)]" 
+    ? "shadow-[0_4px_12px_rgba(168,85,247,0.15)]" 
     : currentStyle.glow;
 
   // Handler for clicking the Checkbox/Status Icon
@@ -84,25 +86,24 @@ const CourseNode = ({ data }: NodeProps<CourseNodeData>) => {
 
   return (
     <div 
-      className={`relative w-[240px] rounded-lg border-2 p-3 transition-all duration-300 group
+      className={`relative w-[280px] rounded-xl border-2 p-4 transition-all duration-300 group
         ${currentStyle.wrapper} ${milestoneGlow} ${milestoneClass}
-        ${isDimmed ? 'opacity-20 grayscale' : 'opacity-100'}
-        ${status === 'locked' ? 'cursor-not-allowed' : 'cursor-pointer'}
+        ${isDimmed ? 'opacity-30 grayscale' : 'opacity-100'}
+        ${status === 'locked' ? 'cursor-not-allowed' : 'cursor-pointer hover:-translate-y-1'}
       `}
       onClick={handleBodyClick}
     >
-      <Handle type="target" position={Position.Top} className="!bg-gray-400 !w-3 !h-3 -mt-2" />
+      <Handle type="target" position={Position.Top} className="!bg-gray-400 !w-3 !h-3 -mt-2 border-2 border-white" />
       
-      <div className="flex justify-between items-start mb-2">
-        <span className={`text-xs font-mono font-bold uppercase tracking-wider opacity-75 ${isMilestone ? 'text-purple-400' : ''}`}>
+      <div className="flex justify-between items-start mb-3">
+        <span className={`text-xs font-mono font-bold uppercase tracking-wider opacity-60 ${isMilestone ? 'text-purple-600' : 'text-gray-500'}`}>
           {course.id}
         </span>
         
         {/* Toggle Button */}
         <div 
           onClick={handleToggleClick}
-          className={`p-1 rounded-full transition-transform active:scale-90 z-10 
-            ${status === 'completed' ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-gray-700 hover:bg-gray-600'}
+          className={`p-1.5 rounded-full transition-transform active:scale-90 z-10 ${currentStyle.iconBg}
             ${status === 'locked' ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}
           `}
         >
@@ -110,22 +111,22 @@ const CourseNode = ({ data }: NodeProps<CourseNodeData>) => {
         </div>
       </div>
       
-      <h3 className="text-sm font-bold leading-tight mb-2 min-h-[2.5em] flex items-center">
+      <h3 className="text-sm font-bold leading-tight mb-3 min-h-[2.5em] flex items-center">
         {course.title}
       </h3>
 
-      <div className="flex justify-between items-center mt-2">
+      <div className="flex justify-between items-center pt-2 border-t border-gray-200/50">
         {course.category && (
-          <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-medium ${isMilestone ? 'bg-purple-900/50 text-purple-200' : 'bg-black/30'}`}>
+          <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide ${isMilestone ? 'bg-purple-100 text-purple-700' : 'bg-gray-200 text-gray-600'}`}>
             {course.category}
           </span>
         )}
-        <div className="text-gray-400 group-hover:text-white transition-colors">
+        <div className="text-gray-400 group-hover:text-blue-500 transition-colors">
             <InfoIcon />
         </div>
       </div>
 
-      <Handle type="source" position={Position.Bottom} className="!bg-gray-400 !w-3 !h-3 -mb-2" />
+      <Handle type="source" position={Position.Bottom} className="!bg-gray-400 !w-3 !h-3 -mb-2 border-2 border-white" />
     </div>
   );
 };
